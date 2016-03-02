@@ -142,5 +142,12 @@ div ul li
 }
 .searchField
 {
+    position: absolute;
     border-radius: 5px;
+    border: none;
+    height: 20px;
+    width: 150px;
+    left: 950px;
+    top: 20px;
+    
 }
