@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Reminder</title>
-	<link rel="stylesheet" type="text/css" href="./assets/css/reminder.css">
+  <title>Reminder</title>
+  <link rel="stylesheet" type="text/css" href="./assets/css/reminder.css">
 </head>
 <body>
 <div class="fixedHeader"> 
@@ -10,34 +10,20 @@
 
    <input type="textfield" placeholder="search" class="searchField"></input>
     
-   <div id = "add" class="addButton">
+   <div id = "add" onclick="addObject(this)" class="addButton">
    +</div>
  
 </div>
 <div class="navBar">
 <ul>
-	<li>SCHEDULE</li>
-	<li>REMINDER</li>
+  <li>SCHEDULE</li>
+  <li>REMINDER</li>
 </ul>
 </div>
 <div id = "container" class="containerDiv">
      <button class="toggleButton">show/Hide</button>
-     <div class="contentDiv">
-         <div class="completedButtonDiv">
-             o
-         </div>
-         
-         <div class="textContainer">
-             <input type="textfield" class="reminderField"></input>
-         </div>
-         
-         <div class="deleteButtonDiv">
-             -
-         </div>
-         
-     </div>
     
 </div>
-<script src=""></script>
+<script src="./js/uimanipulation.js"></script>
 </body>
 </html>
