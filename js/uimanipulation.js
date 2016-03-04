@@ -3,7 +3,7 @@ show = 1;
 var idIndex;
 window.onload=function(){
     var jsonString = localStorage.getItem('reminder');
-    if(jsonString != "" && jsonString != "[]"){
+    if(jsonString != "" && jsonString != "[]" && jsonString != null){
         remArray = (JSON.parse(jsonString));
         loadReminders();
         idIndex = parseInt(remArray[remArray.length-1].id)+1;
