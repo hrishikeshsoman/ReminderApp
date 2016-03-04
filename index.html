@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="fixedHeader"> 
-   REMINDER 
+   <div class = "titleDiv"> REMINDER </div>
 
    <input type="textfield" placeholder="search" class="searchField"></input>
     
@@ -15,15 +15,18 @@
  
 </div>
 <div class="navBar">
-<ul>
-  <li>SCHEDULE</li>
-  <li>REMINDER</li>
-</ul>
+  <div class = "navItem">SCHEDULE</div>
+  <div class="navItem" style="background-color: #333333;">REMINDER</div>
+  <div class = "navItem">...</div>
 </div>
-<div id = "container" class="containerDiv">
-     <button class="toggleButton">show/Hide</button>
-    
+ <div class = "toggleButtonDiv" id = "toggleButton" onClick="showOrHide(this)">Show completed</div>
+<div class="mainDiv">
+    <div id = "containerFinishedDiv" class="containerFinishedDiv">
+    </div>
+    <div id = "container" class="containerDiv">
+    <div>  
 </div>
 <script src="./js/uimanipulation.js"></script>
+<script src="./js/objectmanipulation.js"></script>
 </body>
 </html>
