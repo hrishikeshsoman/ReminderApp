@@ -41,6 +41,7 @@ body
     text-align: center;
     font-size: 20px;
     font-weight: 700;
+    cursor: pointer;
 }
 .addButton:active
 {
@@ -73,6 +74,7 @@ body
     color: #005DB3;
     font-size: 15px;
     font-family: Arial;  
+    cursor: pointer;
 }
 .navBar
 {
@@ -156,10 +158,11 @@ body
     font-size: 20px;
     font-weight: 700;
     line-height: 30px;
+    cursor: pointer;
 }
 .completedButtonDiv:active
 {
-  background-color: #0043B2;
+   background-color: #0043B2;
 }
 .textContainer
 {
@@ -195,6 +198,7 @@ body
     font-size: 20px;
     font-weight: 700;
     line-height: 30px;
+    cursor: pointer;
 }
 .deleteButtonDiv:active
 {
@@ -202,7 +206,7 @@ body
 }
 .navItem:hover
 {
-    background-color: #b52e31;
+   background-color: #b52e31;
 }
 ul
 {

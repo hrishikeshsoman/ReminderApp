@@ -1,90 +1,111 @@
 var index=0;
-show = 1;
+var show = 1;
 var idIndex;
-window.onload=function(){
+
+var newReminderField;
+var oldReminderField;
+
+var completedUncheckedButton;
+var completedCheckedButton;
+
+var deleteButton;
+var innerDiv;
+
+window.onload=function() // fetches the reminder array from local storage if available
+{
     var jsonString = localStorage.getItem('reminder');
-    if(jsonString != "" && jsonString != "[]" && jsonString != null){
+    if(jsonString != "" && jsonString != "[]" && jsonString != null) 
+    {
         remArray = (JSON.parse(jsonString));
         loadReminders();
-        idIndex = parseInt(remArray[remArray.length-1].id)+1;
+        idIndex = parseInt(remArray[remArray.length-1].id)+1; 
     }
-    else {
+    else 
+    {
         idIndex = 0;
     }
 }
-function loadReminders(){
+function loadReminders()  // populates the available reminders on the screen.
+{
     index = 0;
     document.getElementById("containerFinishedDiv").innerHTML="";
-    document.getElementById("container").innerHTML="";
-    while(index < remArray.length){
+    document.getElementById("containerDiv").innerHTML="";
+    while(index < remArray.length)
+        {
                 addObject();
         }
 }
-function showOrHide(toggleButton){
-    if(show==0) {
+function showOrHide(toggleButton) 
+{
+    if(show==0) 
+    {
         show = 1;
         document.getElementById("containerFinishedDiv").style.display = "none";
         toggleButton.innerHTML = "Show completed";
     }
-    else {
+    else 
+    {
         show = 0;
         document.getElementById("containerFinishedDiv").style.display = "block";
         toggleButton.innerHTML = "Hide completed";
     }
 }
-function addObject(event) {
-     if(!event||event.id=="add"||event.keyCode == 13) {
-            var contentDiv = document.createElement('Div');
-            contentDiv.id = "content";
-            contentDiv.className = "contentDiv";
-
-            var completedButton = document.createElement('Div');
-            completedButton.className = "completedButtonDiv";
-            completedButton.setAttribute("onclick","{new reminder(this.nextSibling.nextSibling.firstChild).finishedToggle();}");
-            contentDiv.appendChild(completedButton);
-
-            var deleteButton = document.createElement('Div');
-            deleteButton.className = "deleteButtonDiv";
-            deleteButton.innerHTML="&#10007";
-            deleteButton.setAttribute("onclick","{new reminder(this.nextSibling.firstChild).delete();}");
-            contentDiv.appendChild(deleteButton);
-
-
-            var textDiv = document.createElement('Div');
-            textDiv.id = "text";
-            textDiv.className = "textContainer";
-            contentDiv.appendChild(textDiv);
-
+function addObject(event) // adds a single reminder with UI
+{
+     if(!event||event.id=="add"||event.keyCode == 13) // 13: keycode for enter key
+     {
+         
+            deleteButton =  "<div class = \"contentDiv\">"
+                            + " <div class = \"deleteButtonDiv\" onclick=\"{new reminder(this.nextSibling.nextSibling.nextSibling.nextSibling.firstChild).delete();}\"> &#10007 "
+                            + "</div>";  // &#10007 unicode character for x symbol  
             
-            var textField = document.createElement('Input');
-            textField.className = "reminderField";
-            textField.setAttribute("type","text");
-            textField.setAttribute("onkeydown","addObject(event)");
-            textField.setAttribute("onblur","{new reminder(this).save();}");
-            textDiv.appendChild(textField);
-
-            if(!remArray[index]){
-                document.getElementById('container').appendChild(contentDiv);
-                completedButton.innerHTML = "&#x2610";
-              textField.focus();
-              textField.setAttribute("id",idIndex);
-              idIndex++;
+            if(!remArray[index]) //creates new reminders
+            {
+                completedUncheckedButton =  " <div class=\"completedButtonDiv\" onclick=\"{new reminder(this.nextSibling.nextSibling.firstChild).finishedToggle();}\">"
+                                            + "&#x2610</div>" ; // &#x2610 unicode character for ballot box
+                
+                newReminderField =  " <div id = \"textDiv\" class=\"textContainer\">"
+                                        +  "<input id = "+idIndex+" type=\"text\" class=\"reminderField\" onblur=\"{new reminder(this).save();}\"  onkeydown = \"addObject(event)\" >"
+                                        +  "</input>"
+                                        + "</div>"
+                                        + "</div>";
+                                        
+                innerDiv = document.createElement('div');
+                innerDiv.class = "innerDiv";
+                innerDiv.innerHTML = deleteButton + completedUncheckedButton + newReminderField;
+                document.getElementById('containerDiv').appendChild(innerDiv);
+                document.getElementById(idIndex).focus();   
+                idIndex++;
             }
-            else {
-                textField.id = remArray[index].id;
-                textField.value = remArray[index].text;
-                if(remArray[index].complete == "no"){
-                    completedButton.innerHTML = "&#x2610";
-                     document.getElementById('container').appendChild(contentDiv);
+            else  // reloads the saved reminders
+            {
+                oldReminderField =  " <div id = \"textDiv\" class=\"textContainer\">"
+                                    +  "<input id = "+remArray[index].id+" type=\"text\" class=\"reminderField\" onblur=\"{new reminder(this).save();}\"  onkeydown = \"addObject(event)\" >"
+                                    +  "</input>"
+                                    + "</div>"
+                                    + "</div>";
+            
+                innerDiv = document.createElement('div');
+                innerDiv.class = "innerDiv";
+                
+                if(remArray[index].complete == "no")
+                {
+                     completedUncheckedButton =  " <div class=\"completedButtonDiv\" onclick=\"{new reminder(this.nextSibling.nextSibling.firstChild).finishedToggle();}\">"
+                                                 + "&#x2610</div>" ; // &#x2610 unicode character for ballot box
+                                               
+                     innerDiv.innerHTML = deleteButton + completedUncheckedButton + oldReminderField;
+                     document.getElementById('containerDiv').appendChild(innerDiv);    
                 }
-                else  {
-                    completedButton.innerHTML = "&#x2611";
-                    document.getElementById('containerFinishedDiv').appendChild(contentDiv);
+                else  
+                {
+                    completedCheckedButton =  " <div class=\"completedButtonDiv\" onclick=\"{new reminder(this.nextSibling.nextSibling.firstChild).finishedToggle();}\">"
+                                              + "&#x2611</div>" ; // &#x2611 unicode character for ballot box checked
+                    innerDiv.innerHTML = deleteButton + completedCheckedButton + oldReminderField;
+                    document.getElementById('containerFinishedDiv').appendChild(innerDiv);      
                 }
+                document.getElementById(remArray[index].id).value = remArray[index].text;
             }
 
             index++;   
         }
-
-
 }
